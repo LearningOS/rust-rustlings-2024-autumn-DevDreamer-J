@@ -3,13 +3,13 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
+
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
 
 #[derive(Debug)]
-struct TreeNode<T>
+struct TreeNode<T: Clone>
 where
     T: Ord,
 {
@@ -19,14 +19,14 @@ where
 }
 
 #[derive(Debug)]
-struct BinarySearchTree<T>
+struct BinarySearchTree<T: Clone>
 where
     T: Ord,
 {
     root: Option<Box<TreeNode<T>>>,
 }
 
-impl<T> TreeNode<T>
+impl<T: Clone> TreeNode<T>
 where
     T: Ord,
 {
@@ -39,7 +39,7 @@ where
     }
 }
 
-impl<T> BinarySearchTree<T>
+impl<T: Clone> BinarySearchTree<T>
 where
     T: Ord,
 {
@@ -51,22 +51,45 @@ where
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
         //TODO
+        if self.search(value.clone()) {
+            return;
+        }
+        if self.root.is_none() {
+            self.root = Some(Box::<TreeNode<T>>::new(TreeNode::<T>::new(value)));
+        } else {
+            self.root.as_mut().unwrap().insert(value);
+        }
     }
 
     // Search for a value in the BST
-    fn search(&self, value: T) -> bool {
+    fn search(&mut self, value: T) -> bool {
         //TODO
-        true
+        let mut treeNode = &mut self.root;
+        let mut return_bool = false;
+        while treeNode.is_some() {
+            if treeNode.as_mut().unwrap().value == value {
+                return_bool = true;
+                break;
+            } else {
+                treeNode = &mut treeNode.as_mut().unwrap().left;
+            }
+        }
+        return_bool
     }
 }
 
-impl<T> TreeNode<T>
+impl<T: Clone> TreeNode<T>
 where
     T: Ord,
 {
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
         //TODO
+        if self.left.as_mut().is_none() {
+            self.left = Some(Box::<TreeNode<T>>::new(TreeNode::<T>::new(value)));
+        } else {
+            self.left.as_mut().unwrap().insert(value);
+        }
     }
 }
 
