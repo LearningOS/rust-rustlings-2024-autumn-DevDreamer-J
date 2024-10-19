@@ -17,10 +17,11 @@ fn main() {
         -1, -2, -3,
         -4, -5, -6
     ];
-    println!("My array! Here it is: {:?}", my_arr);
+    println!("My array! Here it is: {my_arr:?}", );
 
-    let my_empty_vec = vec![1, 2, 3, 4, 5];
-    println!("This Vec is empty, see? {:?}", my_empty_vec);
+    let  mut my_empty_vec = vec![1, 2, 3, 4, 5];
+    my_empty_vec.clear();
+    println!("This Vec is empty, see? {my_empty_vec:?}" );
 
     let mut value_a = 45;
     let mut value_b = 66;
@@ -28,5 +29,5 @@ fn main() {
     // value_a = value_b;
     // value_b = value_a;
     std::mem::swap(&mut value_a, &mut value_b);
-    println!("value a: {}; value b: {}", value_a, value_b);
+    println!("value a: {value_a}; value b: {value_b}" );
 }
